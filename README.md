@@ -25,6 +25,25 @@ The database is `strict_media_marketing` on MySQL at `127.0.0.1:3306`, user `roo
 CREATE DATABASE strict_media_marketing CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
+## Deploy (Vercel)
+
+The live site runs on Vercel with the community PHP runtime, `vercel-php`. `vercel.json` builds the CSS and JavaScript with `npm run build`, serves `public/` as static files, and sends every other request to `api/index.php`, which loads Laravel. Pushing to `main` deploys to production at https://strict-marketing.vercel.app.
+
+Vercel can only write to `/tmp`, so the project's environment variables (Vercel → Project → Settings → Environment Variables) point Laravel's caches there:
+
+| Variable | Value |
+|---|---|
+| `APP_ENV`, `APP_DEBUG`, `APP_URL` | `production`, `false`, the site's address |
+| `APP_KEY`, `ADMIN_PASSWORD` | secrets, set in Vercel only |
+| `LOG_CHANNEL`, `LOG_LEVEL` | `stderr` (shows in Vercel's runtime logs), `info` |
+| `SESSION_DRIVER`, `CACHE_STORE`, `QUEUE_CONNECTION` | `cookie`, `array`, `sync` |
+| `VIEW_COMPILED_PATH` | `/tmp/views` |
+| `APP_CONFIG_CACHE`, `APP_EVENTS_CACHE`, `APP_PACKAGES_CACHE`, `APP_ROUTES_CACHE`, `APP_SERVICES_CACHE` | `/tmp/config.php`, `/tmp/events.php`, `/tmp/packages.php`, `/tmp/routes.php`, `/tmp/services.php` |
+
+Setting these from Git Bash on Windows, run `export MSYS_NO_PATHCONV=1` first, or it rewrites `/tmp/...` into a Windows path.
+
+The contact form and admin panel need a MySQL database Vercel can reach. Add `DB_CONNECTION=mysql` and the `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME` and `DB_PASSWORD` it gives you, then create its tables once with `php artisan migrate --force` run against it.
+
 ## Change the content
 
 All text lives in `config/site.php`: brand name, emails, phone, address, case studies, services, print products, process steps and form options. The views read from it, so you rarely need to touch them. If you cache config in production (`php artisan config:cache`), run it again after editing.

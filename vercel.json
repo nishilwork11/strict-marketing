@@ -1,0 +1,19 @@
+{
+    "$schema": "https://openapi.vercel.sh/vercel.json",
+    "framework": null,
+    "installCommand": "npm ci",
+    "buildCommand": "npm run build",
+    "outputDirectory": "public",
+    "regions": ["lhr1"],
+    "functions": {
+        "api/index.php": {
+            "runtime": "vercel-php@0.9.0",
+            "excludeFiles": "{node_modules/**,tests/**,storage/logs/**}"
+        }
+    },
+    "routes": [
+        { "src": "/(index\\.php)?", "dest": "/api/index.php" },
+        { "handle": "filesystem" },
+        { "src": "/(.*)", "dest": "/api/index.php" }
+    ]
+}
