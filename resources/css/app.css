@@ -1,0 +1,472 @@
+@import 'tailwindcss';
+
+/* Tailwind finds classes in resources/views, resources/js, config/site.php and app/ on its own */
+
+@theme {
+  --color-ink: #0a0a0a;
+  --color-slate: #535353;
+  --color-grey: #8c8c8c;
+  --color-mist: #ebebeb;
+  --color-paper: #ffffff;
+  --color-line: #0a0a0a26;
+  --color-line-light: #ffffff4d;
+  --color-mint: #dcf3e2;
+  --color-sky: #d3e8f7;
+  --color-cyan: #00a0dc;
+  --color-magenta: #e5007d;
+  --color-yellow: #f7b500;
+
+  --font-sans: var(--font-hanken), helvetica, sans-serif;
+
+  --ease-out-soft: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-bou: cubic-bezier(0.29, 0.48, 0.5, 0.99);
+}
+
+/* Bou-style fluid page margin and section rhythm */
+@utility page-x {
+  padding-inline: clamp(20px, 4.17vw, 80px);
+}
+
+@utility section-y {
+  padding-block: clamp(90px, 8vw, 160px);
+}
+
+@layer base {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+
+  html {
+    scroll-padding-top: 96px;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-cyan);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+}
+
+/* Soft mint-to-sky wash behind the work section, like Bou's WebGL background */
+.wash {
+  position: relative;
+  isolation: isolate;
+}
+.wash::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(60% 40% at 12% 30%, #dcf3e2 0%, transparent 70%),
+    radial-gradient(55% 45% at 88% 55%, #d3e8f7 0%, transparent 70%),
+    radial-gradient(70% 35% at 40% 80%, #e2f4ee 0%, transparent 75%),
+    linear-gradient(#f4fbf7, #eef7fb);
+  /* Fade in and out so the wash has no hard top or bottom edge */
+  mask-image: linear-gradient(transparent 0%, #000 10%, #000 85%, transparent 100%);
+}
+
+/* Film grain used on the hero and case covers */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.22;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Accordion marker reset for the services list */
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+
+/*
+  Text link underline: draws in from the left on hover and leaves to the right.
+  aria-current holds it, which the header uses to mark the section in view.
+*/
+.link-line {
+  padding-bottom: 2px;
+  background: linear-gradient(currentColor, currentColor) right bottom / 0% 1px no-repeat;
+}
+.link-line:hover,
+.link-line:focus-visible,
+.link-line[aria-current] {
+  background-position: left bottom;
+  background-size: 100% 1px;
+}
+
+/* Form field underline: an ink rule draws across the grey one on focus */
+.field-line {
+  background: linear-gradient(var(--color-ink), var(--color-ink)) left bottom / 0% 1px no-repeat border-box;
+}
+.field-line:focus {
+  background-size: 100% 1px;
+}
+
+/* Tick that opens inside a form pill when it is selected */
+.pill-check {
+  width: 0;
+  margin-right: 0;
+  opacity: 0;
+}
+input:checked + * .pill-check {
+  width: 0.875rem;
+  margin-right: 0.375rem;
+  opacity: 1;
+}
+
+/* Roll labels (x-roll-label): a copy waits below the label, clipped, for hover */
+.roll {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+.roll-a,
+.roll-b {
+  display: block;
+}
+.roll-b {
+  position: absolute;
+  inset: 0;
+  translate: 0 100%;
+}
+
+/* ------------------------------------------------------------------ */
+/* Motion                                                              */
+/* ------------------------------------------------------------------ */
+
+@keyframes drift-a {
+  0%, 100% { transform: translate3d(-8%, -6%, 0) scale(1); }
+  50% { transform: translate3d(10%, 8%, 0) scale(1.15); }
+}
+@keyframes drift-b {
+  0%, 100% { transform: translate3d(6%, 10%, 0) scale(1.1); }
+  50% { transform: translate3d(-12%, -4%, 0) scale(0.95); }
+}
+@keyframes drift-c {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(8%, -12%, 0) scale(1.2); }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(0.6em); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes word-up {
+  from { transform: translateY(110%); }
+  to { transform: translateY(0); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes grow-x {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes hero-exit {
+  to { opacity: 0; transform: translateY(-60px) scale(0.97); }
+}
+@keyframes panel-in {
+  from { transform: scale(0.92); border-radius: 40px; }
+  to { transform: scale(1); border-radius: 4px; }
+}
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes scroll-cue {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(350%); }
+}
+/* Hero words come into focus, like the picture settling behind them */
+@keyframes focus-in {
+  from { opacity: 0; filter: blur(14px); transform: translateY(0.3em); }
+  to { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+@keyframes pop {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+/* Ink dots in the send button take turns lifting while an enquiry is sending */
+@keyframes ink-wait {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-4px); }
+}
+/* Cyan, magenta and yellow plates start out of register, then line up */
+@keyframes register {
+  from {
+    text-shadow:
+      -0.07em 0 0 rgb(0 160 220 / 0.85),
+      0.07em 0.02em 0 rgb(229 0 125 / 0.85),
+      0.02em 0.06em 0 rgb(247 181 0 / 0.7);
+  }
+  to {
+    text-shadow:
+      0 0 0 rgb(0 160 220 / 0),
+      0 0 0 rgb(229 0 125 / 0),
+      0 0 0 rgb(247 181 0 / 0);
+  }
+}
+
+/* Hidden unless the browser can drive it from scroll position (see bottom of file) */
+.scroll-progress {
+  transform: scaleX(0);
+}
+
+/* Split headings: each word sits in a clipping box and slides up into view */
+.word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+.word-inner {
+  display: inline-block;
+}
+/* The hero blurs words in rather than sliding them, so it needs no clipping box */
+.split-load .word {
+  overflow: visible;
+}
+/* Room for the print headline's colour offsets, which would otherwise be clipped */
+.misregister .word {
+  padding-inline: 0.1em;
+  margin-inline: -0.1em;
+}
+
+/* Case study cards (resources/js/site/case-studies.js): --covered runs from 0 to 1 while the next card
+   slides up over this one, which shrinks back and fades. It stays 0 when the visitor
+   asks for reduced motion. */
+.case-card {
+  transform: scale(calc(1 - var(--covered, 0) * 0.08));
+  transform-origin: 50% 0;
+}
+.case-card-fade {
+  opacity: calc(1 - var(--covered, 0) * 0.75);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .blob-a { animation: drift-a 26s var(--ease-bou) infinite; }
+  .blob-b { animation: drift-b 32s var(--ease-bou) infinite; }
+  .blob-c { animation: drift-c 22s var(--ease-bou) infinite; }
+
+  .rise {
+    animation: rise 0.9s var(--ease-out-soft) both;
+  }
+
+  /* Hero headline plays on page load */
+  .split-load .word-inner {
+    animation: focus-in 1.3s var(--ease-out-expo) both;
+    animation-delay: calc(var(--i) * 55ms + 150ms);
+  }
+
+  .pop { animation: pop 0.7s var(--ease-out-expo) both; }
+
+  .link-line { transition: background-size 0.5s var(--ease-out-expo); }
+
+  /* Roll labels: hovering or focusing the button rolls the label up and the copy in */
+  .roll-a,
+  .roll-b { transition: translate 0.55s var(--ease-out-expo); }
+  :is(a, button:enabled):is(:hover, :focus-visible) > .roll > .roll-a { translate: 0 -100%; }
+  :is(a, button:enabled):is(:hover, :focus-visible) > .roll > .roll-b { translate: 0 0; }
+
+  .ink-wait {
+    animation: ink-wait 0.9s var(--ease-bou) infinite;
+    animation-delay: calc(var(--d, 0) * 120ms);
+  }
+  .field-line { transition: background-size 0.6s var(--ease-out-expo), border-color 0.2s; }
+  .pill-check {
+    transition:
+      width 0.35s var(--ease-out-expo),
+      margin-right 0.35s var(--ease-out-expo),
+      opacity 0.25s;
+  }
+
+  .marquee { animation: marquee 60s linear infinite; }
+  .marquee-reverse { animation: marquee 60s linear infinite reverse; }
+  .marquee-track:hover .marquee,
+  .marquee-track:hover .marquee-reverse {
+    animation-play-state: paused;
+  }
+
+  .check-draw {
+    stroke-dasharray: 60;
+    stroke-dashoffset: 60;
+    animation: draw 0.7s var(--ease-out-soft) 0.15s forwards;
+  }
+
+  /* Smooth open and close for the services accordion */
+  details::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition: block-size 0.5s var(--ease-bou), content-visibility 0.5s allow-discrete;
+  }
+  details[open]::details-content {
+    block-size: auto;
+  }
+  /* An opened service lists its points one after another */
+  details[open] .point {
+    animation: rise 0.6s var(--ease-out-soft) both;
+    animation-delay: calc(var(--j, 0) * 50ms + 120ms);
+  }
+}
+
+/*
+  Scroll reveals. Elements carry data-reveal; resources/js/motion/reveal.js adds data-shown
+  when they enter the viewport. Without JavaScript or with reduced motion,
+  everything simply shows.
+*/
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-reveal="up"] {
+    transition:
+      opacity 0.9s var(--ease-out-soft),
+      transform 1s var(--ease-out-expo);
+    transition-delay: calc(var(--i, 0) * 90ms);
+  }
+  [data-reveal="up"]:not([data-shown]) {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  [data-reveal="words"] .word-inner {
+    transition: transform 1.1s var(--ease-out-expo);
+    transition-delay: calc(var(--i) * 45ms);
+  }
+  [data-reveal="words"]:not([data-shown]) .word-inner {
+    transform: translateY(110%);
+  }
+
+  [data-reveal="line"] .draw-line {
+    transform-origin: left;
+    transition: transform 1.3s var(--ease-out-expo);
+    transition-delay: calc(var(--i, 0) * 140ms);
+  }
+  [data-reveal="line"] .line-text {
+    transition:
+      opacity 0.8s var(--ease-out-soft),
+      transform 0.9s var(--ease-out-expo);
+    transition-delay: calc(var(--i, 0) * 140ms + 250ms);
+  }
+  [data-reveal="line"]:not([data-shown]) .draw-line {
+    transform: scaleX(0);
+  }
+  [data-reveal="line"]:not([data-shown]) .line-text {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  [data-reveal="crop"] > * {
+    transition:
+      transform 1.1s var(--ease-out-expo) 0.2s,
+      opacity 0.6s ease 0.2s;
+  }
+  [data-reveal="crop"]:not([data-shown]) > * {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  /* Step markers on the process rules pop in as their rule starts drawing */
+  [data-reveal="line"] .line-dot {
+    transition: transform 0.7s var(--ease-out-expo);
+    transition-delay: calc(var(--i, 0) * 140ms);
+  }
+  [data-reveal="line"]:not([data-shown]) .line-dot {
+    transform: scale(0);
+  }
+
+  /* Work covers: the frame opens downwards while the picture settles from a slight zoom */
+  [data-reveal="unmask"] .unmask-frame {
+    clip-path: inset(0 0 0 0);
+    transition: clip-path 1.8s var(--ease-in-out-soft);
+    transition-delay: calc(var(--i, 0) * 180ms);
+  }
+  [data-reveal="unmask"] .unmask-zoom {
+    transition: transform 2.4s var(--ease-out-soft);
+    transition-delay: calc(var(--i, 0) * 180ms);
+  }
+  [data-reveal="unmask"] .unmask-text {
+    transition:
+      opacity 1.1s var(--ease-out-soft),
+      transform 1.3s var(--ease-out-soft);
+    transition-delay: calc(var(--i, 0) * 180ms + 700ms);
+  }
+  [data-reveal="unmask"]:not([data-shown]) .unmask-frame {
+    clip-path: inset(0 0 100%);
+  }
+  [data-reveal="unmask"]:not([data-shown]) .unmask-zoom {
+    transform: scale(1.2);
+  }
+  [data-reveal="unmask"]:not([data-shown]) .unmask-text {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  /* Text that slides up out of a clipping box (platform names) */
+  [data-reveal="mask"] .mask-in {
+    transition: transform 1s var(--ease-out-expo);
+    transition-delay: calc(var(--i, 0) * 70ms);
+  }
+  [data-reveal="mask"]:not([data-shown]) .mask-in {
+    transform: translateY(110%);
+  }
+
+  /* Print headline: words rise out of register and settle into it */
+  [data-reveal="words"][data-shown].misregister .word-inner {
+    animation: register 1.6s var(--ease-out-expo) both;
+    animation-delay: calc(var(--i) * 45ms + 250ms);
+  }
+
+  /* CMYK dots start stacked on the first one, then fan out into a row */
+  [data-reveal] .ink-dot {
+    transition: transform 1s var(--ease-out-expo);
+    transition-delay: calc(var(--d, 0) * 70ms + 250ms);
+  }
+  [data-reveal]:not([data-shown]) .ink-dot {
+    transform: translateX(calc(var(--d, 0) * -12px));
+  }
+
+  /* Intro statement: words darken one after another as it scrolls through */
+  [data-scrub] .word-inner {
+    opacity: clamp(0.14, calc(var(--p, 0) * (var(--n) + 4) - var(--i)), 1);
+    transition: opacity 0.25s linear;
+  }
+}
+
+/* Scroll-linked effects where the browser supports scroll timelines */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Fades out over the first half-screen of page scroll, before it reaches the menu */
+    .hero-exit {
+      animation: hero-exit linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0px 55vh;
+    }
+    .panel-in {
+      animation: panel-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 85%;
+    }
+    .scroll-progress {
+      animation: grow-x linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+}
