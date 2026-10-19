@@ -4,11 +4,13 @@
         <h1 class="text-[clamp(32px,3.4vw,48px)] leading-[1.1] font-light tracking-[-0.01em]">Enquiries</h1>
         <p class="mt-2 text-[16px] text-slate">Everything sent through the contact form on your website.</p>
 
-        <x-admin.stat-tiles :enquiries="$enquiries" :now="$now" />
-
-        @if ($enquiries->isNotEmpty())
+        @if ($databaseError ?? false)
+            <x-admin.database-notice />
+        @elseif ($enquiries->isNotEmpty())
+            <x-admin.stat-tiles :enquiries="$enquiries" :now="$now" />
             <x-admin.inbox :enquiries="$enquiries" :now="$now" :filter="$filter" :query="$query" />
         @else
+            <x-admin.stat-tiles :enquiries="$enquiries" :now="$now" />
             <div class="mt-8 flex flex-col items-center rounded-2xl bg-paper px-6 py-16 text-center">
                 <span aria-hidden="true" class="flex gap-1.5">
                     <span class="size-2.5 rounded-full bg-cyan"></span>

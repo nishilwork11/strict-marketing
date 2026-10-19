@@ -8,7 +8,9 @@
             All enquiries
         </a>
 
-        @if (! $enquiry)
+        @if ($databaseError ?? false)
+            <x-admin.database-notice />
+        @elseif (! $enquiry)
             <div class="mt-8 flex flex-col items-center rounded-2xl bg-paper px-6 py-16 text-center">
                 <h1 class="text-[28px] leading-tight font-light">This enquiry isn't here</h1>
                 <p class="mt-2 text-[16px] text-slate">It may have been deleted.</p>

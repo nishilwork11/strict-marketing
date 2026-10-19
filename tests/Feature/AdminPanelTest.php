@@ -6,6 +6,7 @@ use App\Enums\EnquiryStatus;
 use App\Models\Enquiry;
 use App\Support\AdminSession;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Sleep;
 use Tests\TestCase;
 
@@ -176,6 +177,19 @@ class AdminPanelTest extends TestCase
         $this->signedIn()->get("/admin/enquiries/{$enquiry->id}")
             ->assertNotFound()
             ->assertSee("This enquiry isn't here", false);
+    }
+
+    public function test_without_a_database_the_admin_says_so_instead_of_failing(): void
+    {
+        $enquiry = $this->enquiry();
+        Schema::drop('enquiries');
+
+        $this->signedIn()->get('/admin')
+            ->assertOk()
+            ->assertSee("Enquiries can't be loaded right now", false);
+        $this->signedIn()->get("/admin/enquiries/{$enquiry->id}")
+            ->assertServiceUnavailable()
+            ->assertSee("Enquiries can't be loaded right now", false);
     }
 
     public function test_signing_out_forgets_the_session(): void

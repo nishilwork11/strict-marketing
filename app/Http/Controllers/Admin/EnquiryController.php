@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\EnquiryStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Enquiry;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,9 +19,18 @@ class EnquiryController extends Controller
      */
     public function index(Request $request): View
     {
-        return view('admin.index', [
+        try {
             // Newest first
-            'enquiries' => Enquiry::query()->orderByDesc('received_at')->orderByDesc('id')->get(),
+            $enquiries = Enquiry::query()->orderByDesc('received_at')->orderByDesc('id')->get();
+        } catch (QueryException $e) {
+            // Usually no database is connected yet; the page says so rather than failing
+            report($e);
+
+            return view('admin.index', ['databaseError' => true]);
+        }
+
+        return view('admin.index', [
+            'enquiries' => $enquiries,
             // The moment they were read, which the date labels and the chart count from
             'now' => now(),
             // Search and filter are kept in the address bar, so coming back from an enquiry returns to the same view
@@ -34,7 +44,13 @@ class EnquiryController extends Controller
      */
     public function show(string $id): Response
     {
-        $enquiry = Enquiry::find($id);
+        try {
+            $enquiry = Enquiry::find($id);
+        } catch (QueryException $e) {
+            report($e);
+
+            return response()->view('admin.enquiry', ['enquiry' => null, 'databaseError' => true], 503);
+        }
 
         // A deleted enquiry's page says so, rather than a bare error page
         return response()->view('admin.enquiry', ['enquiry' => $enquiry, 'now' => now()], $enquiry ? 200 : 404);
