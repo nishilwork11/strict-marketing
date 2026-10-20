@@ -1,0 +1,1 @@
+function e(e,t){for(let n of e.querySelectorAll(`:scope > .roll > span`))n.textContent=t}export{e as t};
