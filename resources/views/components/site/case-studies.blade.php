@@ -8,7 +8,7 @@
             as="h2"
             id="cases-title"
             text="Case studies"
-            class="text-[clamp(28px,3vw,48px)] leading-none font-light whitespace-nowrap"
+            class="font-display text-[clamp(28px,3vw,48px)] leading-none font-light whitespace-nowrap"
         />
         <p class="text-[15px] text-slate">{{ count($studies) }} projects</p>
     </div>
@@ -35,7 +35,7 @@
                         <p class="mt-6 text-[15px] font-semibold">{{ $study['client'] }}</p>
                         <h3
                             id="case-{{ $study['id'] }}-title"
-                            class="mt-1.5 text-[clamp(28px,2.8vw,48px)] leading-[1.06] font-light tracking-[-0.02em] text-balance"
+                            class="mt-1.5 font-display text-[clamp(28px,2.8vw,48px)] leading-[1.06] font-light tracking-[-0.02em] text-balance"
                         >{{ $study['summary'] }}</h3>
                         <p class="mt-4 max-w-[560px] text-[16px] leading-relaxed text-slate">{{ $study['description'] }}</p>
 
@@ -45,7 +45,7 @@
                                 <div class="border-b border-line py-3 last:border-b-0 sm:border-r sm:border-b-0 sm:pt-4 sm:pr-3 sm:pb-0 sm:last:border-r-0 sm:[&:not(:first-child)]:pl-4">
                                     <dt class="sr-only">{{ $fact['label'] }}</dt>
                                     <dd class="flex items-baseline justify-between gap-4 sm:block">
-                                        <span class="block shrink-0 text-[clamp(22px,2.2vw,34px)] leading-none font-light tracking-[-0.02em]"><x-count-up :value="$fact['value']" /></span>
+                                        <span class="block shrink-0 font-display text-[clamp(22px,2.2vw,34px)] leading-none font-light tracking-[-0.02em]"><x-count-up :value="$fact['value']" /></span>
                                         <span class="block text-right text-[14px] leading-snug text-slate sm:mt-2 sm:text-left">{{ $fact['label'] }}</span>
                                     </dd>
                                 </div>

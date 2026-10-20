@@ -15,7 +15,7 @@
                 <path class="check-draw" d="M5 12.5l4.5 4.5L19 7.5" />
             </svg>
         </span>
-        <p class="rise text-[clamp(26px,2.4vw,36px)] leading-tight font-light" style="animation-delay: 120ms">Enquiry sent.</p>
+        <p class="rise font-display text-[clamp(26px,2.4vw,36px)] leading-tight font-light" style="animation-delay: 120ms">Enquiry sent.</p>
         <p class="rise mt-3 text-[17px] text-slate" style="animation-delay: 220ms" data-contact-sent-message>{{ $sent }}</p>
         <a
             href="{{ url('/') }}#contact"

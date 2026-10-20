@@ -17,6 +17,7 @@
   --color-yellow: #f7b500;
 
   --font-sans: var(--font-hanken), helvetica, sans-serif;
+  --font-display: var(--font-fraunces), Georgia, 'Times New Roman', serif;
 
   --ease-out-soft: cubic-bezier(0.33, 1, 0.68, 1);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);

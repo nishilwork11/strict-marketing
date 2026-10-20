@@ -14,6 +14,11 @@ export default defineConfig({
                     variable: '--font-hanken',
                     weights: ['100..900'],
                 }),
+                // Display serif for headings, paired with Hanken Grotesk for body
+                google('Fraunces', {
+                    variable: '--font-fraunces',
+                    weights: ['300..600'],
+                }),
             ],
         }),
         tailwindcss(),

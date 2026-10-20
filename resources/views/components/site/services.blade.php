@@ -7,7 +7,7 @@
             as="h2"
             id="services-title"
             :text="$services['statement']"
-            class="block max-w-[620px] text-[clamp(30px,3vw,48px)] leading-[1.1] font-light tracking-[-0.01em] text-balance"
+            class="block max-w-[620px] font-display text-[clamp(30px,3vw,48px)] leading-[1.1] font-light tracking-[-0.01em] text-balance"
         />
         <p data-reveal="up" style="--i: 3" class="mt-8 max-w-[560px] text-[17px] leading-relaxed text-slate">{{ $services['body'] }}</p>
     </div>
@@ -24,7 +24,7 @@
                         class="absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-ink transition-transform duration-700 ease-(--ease-out-expo) group-hover/row:scale-x-100 group-has-[details[open]]/row:scale-x-100"
                     ></span>
                     <details class="line-text group">
-                        <summary class="flex cursor-pointer items-center justify-between gap-6 py-4 text-[clamp(26px,2.4vw,38px)] leading-tight font-light">
+                        <summary class="flex cursor-pointer items-center justify-between gap-6 py-4 font-display text-[clamp(26px,2.4vw,38px)] leading-tight font-light">
                             <span class="transition-transform duration-500 ease-(--ease-out-expo) group-hover:translate-x-2 group-open:translate-x-2">{{ $item['name'] }}</span>
                             <span
                                 aria-hidden="true"

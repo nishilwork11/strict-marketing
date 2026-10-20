@@ -6,7 +6,7 @@
         as="h2"
         id="platforms-title"
         :text="$platforms['statement']"
-        class="mx-auto block max-w-[760px] text-center text-[clamp(30px,3.4vw,52px)] leading-[1.12] font-light tracking-[-0.01em] text-balance"
+        class="mx-auto block max-w-[760px] text-center font-display text-[clamp(30px,3.4vw,52px)] leading-[1.12] font-light tracking-[-0.01em] text-balance"
     />
     {{-- Every cell draws a right border; the list overhangs its clipping box by 1px,
          so the border on each row's last cell is hidden and only dividers remain. --}}

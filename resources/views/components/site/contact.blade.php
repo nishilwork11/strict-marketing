@@ -9,7 +9,7 @@
                 as="h2"
                 id="contact-title"
                 :text="$contact['headline']"
-                class="block text-[clamp(34px,3.4vw,54px)] leading-[1.1] font-light tracking-[-0.01em] text-balance"
+                class="block font-display text-[clamp(34px,3.4vw,54px)] leading-[1.1] font-light tracking-[-0.01em] text-balance"
             />
             <p data-reveal="up" style="--i: 2" class="mt-6 max-w-[420px] text-[17px] leading-relaxed text-slate">{{ $contact['note'] }}</p>
 
@@ -38,7 +38,7 @@
         </div>
 
         <div data-reveal="up" style="--i: 1" class="relative rounded bg-mist p-[clamp(22px,3vw,48px)]">
-            <h3 class="mb-8 text-[clamp(24px,2vw,30px)] font-light">{{ $contact['form_title'] }}</h3>
+            <h3 class="mb-8 font-display text-[clamp(24px,2vw,30px)] font-light">{{ $contact['form_title'] }}</h3>
             <x-site.contact-form />
         </div>
     </div>
