@@ -1,12 +1,15 @@
 <?php
 
-// All page copy lives here. Replace the placeholder brand, contact details
-// and SAMPLE case studies with real ones; the views need no changes.
+// All page copy lives here: change it here and the views follow.
 
 $services = [
-    'statement' => 'Web, marketing, software and printing. One team and one point of contact.',
-    'body' => 'Most businesses juggle a web developer, an ads agency, a CRM consultant and a printer. We do all four, so your website, campaigns and printed materials share the same data, the same brand and the same deadline.',
+    'statement' => 'Brand, web, marketing, software and printing. One team and one point of contact.',
+    'body' => 'Most businesses juggle a designer, a web developer, an ads agency, a CRM consultant and a printer. We do all five, so your brand, website, campaigns and printed materials share the same data, the same look and the same deadline.',
     'items' => [
+        [
+            'name' => 'Brand & design',
+            'points' => ['Logos and brand identity', 'Brand guidelines', 'Website and app design', 'Print and packaging design'],
+        ],
         [
             'name' => 'Web development',
             'points' => ['Business websites', 'E-commerce stores', 'Web apps and portals', 'Hosting, speed and support'],
@@ -45,7 +48,7 @@ return [
         'address' => ['Studio address line', 'City, Postcode'],
         'locations' => ['London', 'Remote, UK-wide'],
         'year' => 2026,
-        'tagline' => 'Web development, marketing, custom software and printing, from one team.',
+        'tagline' => 'Brand and design, web development, marketing, custom software and printing, from one team.',
         // Set in capitals under the wordmark in the footer and admin panel, split by dots
         'strapline' => ['Marketing', 'PPC', 'Web development', 'Printing'],
     ],
@@ -58,7 +61,7 @@ return [
     ],
 
     'hero' => [
-        'headline' => 'STRICTMEDIA is a digital company working across web development, marketing, custom software and printing.',
+        'headline' => 'STRICTMEDIA is a digital company working across brand and design, web development, marketing, custom software and printing.',
     ],
 
     'intro' => [
@@ -133,21 +136,6 @@ return [
             ],
         ],
         [
-            'id' => 'beata-digital-academy',
-            'client' => 'Beata Digital Academy',
-            'url' => 'https://beatadigitalacademy.com',
-            'featured' => true,
-            'summary' => 'An online academy for massage therapists',
-            'tags' => ['Web design', 'Web development'],
-            'cover' => ['from' => '#e8b6be', 'to' => '#fbeef0', 'dark' => false],
-            'description' => 'Massage therapist and teacher Beata Aleksandrowicz shares 35 years of experience through accredited online courses and masterclasses. Therapists learn from pre-recorded videos whenever suits them, with no travel and no fixed course dates.',
-            'facts' => [
-                ['value' => '35 years', 'label' => 'Of Beata’s experience'],
-                ['value' => '59 videos', 'label' => 'In the face massage course'],
-                ['value' => 'Accredited', 'label' => 'Courses and masterclasses'],
-            ],
-        ],
-        [
             'id' => 'southgate-timber',
             'client' => 'Southgate Timber',
             'url' => 'https://southgatetimber.co.uk',
@@ -211,14 +199,6 @@ return [
             'cover' => ['from' => '#111111', 'to' => '#23479a', 'dark' => true],
         ],
         [
-            'id' => 'fab-homes',
-            'client' => 'Fab Homes',
-            'url' => 'https://www.fabhomes.co.uk',
-            'summary' => 'A sales and lettings website for a North London estate agent',
-            'tags' => ['Web design', 'Web development'],
-            'cover' => ['from' => '#f4a516', 'to' => '#fde2a0', 'dark' => false],
-        ],
-        [
             'id' => 'spartan-pmj',
             'client' => 'The Spartan Group & PMJ',
             'url' => 'https://spartanpmj.com',
@@ -230,7 +210,7 @@ return [
 
     'platforms' => [
         'statement' => "We've worked with 150+ businesses across the UK, France & Cyprus, on everything they need to grow.",
-        'items' => ['Web development', 'SEO', 'Google Ads', 'Meta Ads', 'Custom CRM', 'Printing Services'],
+        'items' => ['Brand development', 'Graphic design', 'Web development', 'SEO', 'Google Ads', 'Meta Ads', 'Custom CRM', 'Printing Services'],
     ],
 
     'services' => $services,
@@ -282,7 +262,7 @@ return [
         'headline' => "Got a project in mind? Let's talk it through.",
         'note' => "Tell us a little about it and we'll reply within one working day.",
         'form_title' => "Let's discuss your project",
-        'services' => ['Website', 'SEO', 'PPC', 'Custom software', 'CRM', 'Printing'],
+        'services' => ['Brand & design', 'Website', 'SEO', 'PPC', 'Custom software', 'CRM', 'Printing'],
         'budgets' => ['Under £5k', '£5k–15k', '£15k–50k', '£50k+', 'Not sure yet'],
     ],
 

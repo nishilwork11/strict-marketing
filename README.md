@@ -48,7 +48,7 @@ The contact form and admin panel need a MySQL database Vercel can reach. Add `DB
 
 All text lives in `config/site.php`: brand name, emails, phone, address, case studies, services, print products, process steps and form options. The views read from it, so you rarely need to touch them. If you cache config in production (`php artisan config:cache`), run it again after editing.
 
-The work grid shows every project in `case_studies`, and the six marked `'featured' => true` also get a full case study card further down; the rest link straight to their site. Each project needs screenshots in `public/images/work/`, named after its `id`:
+The work grid shows every project in `case_studies`, and those marked `'featured' => true` also get a full case study card further down; the rest link straight to their site. Each project needs screenshots in `public/images/work/`, named after its `id`:
 
 - `{id}.webp`: the top of its home page, 1080 × 675 (a 1440 × 900 browser window at 0.75 scale).
 - `{id}-full.webp`: the page scrolled further, up to 1080 × 2700. A featured case study's cover scrolls through it on hover.

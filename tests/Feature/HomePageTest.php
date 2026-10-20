@@ -10,7 +10,7 @@ class HomePageTest extends TestCase
     {
         $this->get('/')
             ->assertOk()
-            ->assertSee('<title>STRICTMEDIA – Web, marketing, software and printing</title>', false)
+            ->assertSee('<title>STRICTMEDIA – Brand, web, marketing, software and printing</title>', false)
             ->assertSeeInOrder([
                 'id="top"',
                 'aria-label="What we do"',
@@ -63,7 +63,7 @@ class HomePageTest extends TestCase
         // Each word of a headline sits in its own span, so it reads as one only once the tags are gone
         $this->get('/')
             ->assertSeeText('A brand new headline')
-            ->assertSee('6 projects')
+            ->assertSee('Brand & design')
             ->assertSee('hello@strictmedia.co.uk')
             ->assertSee('Get a printing quote');
     }

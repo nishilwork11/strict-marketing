@@ -11,12 +11,12 @@
     {{-- Every cell draws a right border; the list overhangs its clipping box by 1px,
          so the border on each row's last cell is hidden and only dividers remain. --}}
     <div class="mt-[clamp(48px,5vw,90px)] overflow-hidden">
-        <ul class="-mr-px grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
+        <ul class="-mr-px grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-8">
             @foreach ($platforms['items'] as $i => $name)
                 <li
                     data-reveal="mask"
                     style="--i: {{ $i }}"
-                    class="group relative flex aspect-[3/2] items-center justify-center overflow-hidden border-r border-b border-line px-3 text-center text-[clamp(17px,1.4vw,21px)] font-medium tracking-tight lg:aspect-[5/4]"
+                    class="group relative flex aspect-[3/2] items-center justify-center overflow-hidden border-r border-b border-line px-3 text-center text-[clamp(17px,1.4vw,21px)] font-medium tracking-tight xl:aspect-[5/4]"
                 >
                     {{-- Fills from the bottom on hover --}}
                     <span

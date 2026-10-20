@@ -1,6 +1,6 @@
 <x-layouts.app
-    :title="config('site.brand.name').' – Web, marketing, software and printing'"
-    description="Web development, SEO, PPC, custom software, CRM and printing from one team."
+    :title="config('site.brand.name').' – Brand, web, marketing, software and printing'"
+    description="Brand and design, web development, SEO, PPC, custom software, CRM and printing from one team."
 >
     <x-site.header />
     <main>

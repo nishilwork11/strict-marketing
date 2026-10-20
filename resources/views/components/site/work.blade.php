@@ -1,6 +1,11 @@
 @php
     $intro = config('site.intro');
     $studies = config('site.case_studies');
+    // The closing tile takes whatever the last row has left, so the grid always ends square
+    $leftSm = 2 - count($studies) % 2;
+    $leftLg = 3 - count($studies) % 3;
+    $closingSpan = ['sm:col-span-1', 'sm:col-span-2'][$leftSm - 1].' '.['lg:col-span-1', 'lg:col-span-2', 'lg:col-span-3'][$leftLg - 1];
+    $closingAspect = ['sm:aspect-[16/9]', 'sm:aspect-[32/9]'][$leftSm - 1].' '.['lg:aspect-[16/9]', 'lg:aspect-[32/9]', 'lg:aspect-[48/9]'][$leftLg - 1];
 @endphp
 <section class="page-x section-y flex flex-col items-center text-center">
     <x-split-words
@@ -56,10 +61,10 @@
             </li>
         @endforeach
 
-        {{-- Rounds off the grid: the next project could be yours. Spans both columns where there are two. --}}
-        <li data-reveal="unmask" style="--i: {{ count($studies) % 3 }}" class="sm:col-span-2 lg:col-span-1">
+        {{-- Rounds off the grid: the next project could be yours. Wider when it fills more of the row. --}}
+        <li data-reveal="unmask" style="--i: {{ count($studies) % 3 }}" class="{{ $closingSpan }}">
             <a href="#contact" class="group block">
-                <div class="unmask-frame relative aspect-[16/9] overflow-hidden rounded sm:aspect-[32/9] lg:aspect-[16/9]">
+                <div class="unmask-frame relative aspect-[16/9] overflow-hidden rounded {{ $closingAspect }}">
                     <div class="unmask-zoom h-full">
                         <div class="h-full transition-transform duration-1000 ease-(--ease-bou) group-hover:scale-[1.04]">
                             <div class="grain relative isolate flex h-full overflow-hidden rounded bg-ink text-paper">
@@ -77,7 +82,7 @@
                 <h3 class="unmask-text mt-4 text-[22px] leading-snug font-semibold">
                     <span class="bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-700 ease-(--ease-out-expo) group-hover:bg-[length:100%_1px]">Let's work together</span>
                 </h3>
-                <p class="unmask-text mt-0.5 text-[17px] leading-snug font-light text-slate">Websites, marketing, software and print, from one team.</p>
+                <p class="unmask-text mt-0.5 text-[17px] leading-snug font-light text-slate">Branding, websites, marketing, software and print, from one team.</p>
             </a>
         </li>
     </ul>
