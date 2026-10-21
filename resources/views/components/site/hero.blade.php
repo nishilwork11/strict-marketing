@@ -24,7 +24,7 @@
             as="h1"
             mode="load"
             :text="config('site.hero.headline')"
-            class="text-[clamp(38px,4.6vw,72px)] leading-[1.1] font-light tracking-[-0.01em] text-balance"
+            class="font-display text-[clamp(38px,4.6vw,72px)] leading-[1.1] font-light tracking-[-0.01em] text-balance"
         />
 
         <div

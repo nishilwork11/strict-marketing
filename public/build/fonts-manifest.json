@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "style": {
+    "file": "assets/fonts-DgH7pSMY.css",
+    "familyStyles": {
+      "hanken-grotesk": "@font-face {\n  font-family: \"Hanken Grotesk\";\n  font-style: normal;\n  font-weight: 100 900;\n  font-display: swap;\n  src: url(\"/build/assets/hanken-grotesk-100-900-normal-CaVRRdDk.woff2\") format(\"woff2\");\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n\n@font-face {\n  font-family: \"Hanken Grotesk fallback\";\n  src: local(\"Arial\");\n  ascent-override: 98.09%;\n  descent-override: 29.72%;\n  line-gap-override: 0.00%;\n  size-adjust: 101.95%;\n}\n\n.font-hanken {\n  font-family: var(--font-hanken);\n}",
+      "fraunces": "@font-face {\n  font-family: \"Fraunces\";\n  font-style: normal;\n  font-weight: 300 600;\n  font-display: swap;\n  src: url(\"/build/assets/fraunces-300-600-normal-ukD16Tqj.woff2\") format(\"woff2\");\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n\n@font-face {\n  font-family: \"Fraunces fallback\";\n  src: local(\"Arial\");\n  ascent-override: 83.66%;\n  descent-override: 21.81%;\n  line-gap-override: 0.00%;\n  size-adjust: 116.90%;\n}\n\n.font-fraunces {\n  font-family: var(--font-fraunces);\n}"
+    },
+    "variables": {
+      "hanken-grotesk": "--font-hanken: \"Hanken Grotesk\", \"Hanken Grotesk fallback\";",
+      "fraunces": "--font-fraunces: \"Fraunces\", \"Fraunces fallback\";"
+    }
+  },
+  "preloads": [
+    {
+      "alias": "hanken-grotesk",
+      "family": "Hanken Grotesk",
+      "weight": "100 900",
+      "style": "normal",
+      "file": "assets/hanken-grotesk-100-900-normal-CaVRRdDk.woff2",
+      "as": "font",
+      "type": "font/woff2",
+      "crossorigin": "anonymous"
+    },
+    {
+      "alias": "fraunces",
+      "family": "Fraunces",
+      "weight": "300 600",
+      "style": "normal",
+      "file": "assets/fraunces-300-600-normal-ukD16Tqj.woff2",
+      "as": "font",
+      "type": "font/woff2",
+      "crossorigin": "anonymous"
+    }
+  ],
+  "families": {
+    "hanken-grotesk": {
+      "family": "Hanken Grotesk",
+      "variable": "--font-hanken",
+      "fallbackFamily": "Hanken Grotesk fallback",
+      "variants": {
+        "100 900:normal": {
+          "files": [
+            {
+              "file": "assets/hanken-grotesk-100-900-normal-CaVRRdDk.woff2",
+              "format": "woff2",
+              "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD"
+            }
+          ]
+        }
+      }
+    },
+    "fraunces": {
+      "family": "Fraunces",
+      "variable": "--font-fraunces",
+      "fallbackFamily": "Fraunces fallback",
+      "variants": {
+        "300 600:normal": {
+          "files": [
+            {
+              "file": "assets/fraunces-300-600-normal-ukD16Tqj.woff2",
+              "format": "woff2",
+              "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

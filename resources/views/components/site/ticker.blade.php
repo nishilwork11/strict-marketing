@@ -15,7 +15,7 @@
                     {{-- Screen readers hear each name once, not the repeat --}}
                     <li
                         @if ($i >= count($ticker)) aria-hidden="true" @endif
-                        class="flex items-center text-[clamp(40px,6vw,104px)] leading-none font-light tracking-[-0.02em] whitespace-nowrap"
+                        class="flex items-center font-display text-[clamp(40px,6vw,104px)] leading-none font-light tracking-[-0.02em] whitespace-nowrap"
                     >
                         {{-- Filled and outlined names alternate; hovering one swaps it --}}
                         <span @class([

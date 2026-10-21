@@ -25,24 +25,11 @@ The database is `strict_media_marketing` on MySQL at `127.0.0.1:3306`, user `roo
 CREATE DATABASE strict_media_marketing CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
-## Deploy (Vercel)
+## Deploy (20i)
 
-The live site runs on Vercel with the community PHP runtime, `vercel-php`. `vercel.json` builds the CSS and JavaScript with `npm run build`, serves `public/` as static files, and sends every other request to `api/index.php`, which loads Laravel. Pushing to `main` deploys to production at https://strict-marketing.vercel.app.
+The site runs on 20i shared hosting (StackCP) as an ordinary Laravel app: pure PHP on the server, with no Node or npm needed there. The CSS and JavaScript are compiled once with Vite and shipped in `public/build/`, so the server only needs PHP 8.3 and Composer.
 
-Vercel can only write to `/tmp`, so the project's environment variables (Vercel → Project → Settings → Environment Variables) point Laravel's caches there:
-
-| Variable | Value |
-|---|---|
-| `APP_ENV`, `APP_DEBUG`, `APP_URL` | `production`, `false`, the site's address |
-| `APP_KEY`, `ADMIN_PASSWORD` | secrets, set in Vercel only |
-| `LOG_CHANNEL`, `LOG_LEVEL` | `stderr` (shows in Vercel's runtime logs), `info` |
-| `SESSION_DRIVER`, `CACHE_STORE`, `QUEUE_CONNECTION` | `cookie`, `array`, `sync` |
-| `VIEW_COMPILED_PATH` | `/tmp/views` |
-| `APP_CONFIG_CACHE`, `APP_EVENTS_CACHE`, `APP_PACKAGES_CACHE`, `APP_ROUTES_CACHE`, `APP_SERVICES_CACHE` | `/tmp/config.php`, `/tmp/events.php`, `/tmp/packages.php`, `/tmp/routes.php`, `/tmp/services.php` |
-
-Setting these from Git Bash on Windows, run `export MSYS_NO_PATHCONV=1` first, or it rewrites `/tmp/...` into a Windows path.
-
-The contact form and admin panel need a MySQL database Vercel can reach. Add `DB_CONNECTION=mysql` and the `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME` and `DB_PASSWORD` it gives you, then create its tables once with `php artisan migrate --force` run against it.
+See **[DEPLOY-20i.md](DEPLOY-20i.md)** for the full walkthrough — uploading the code, `composer install` over SSH, pointing the domain's document root at `public/`, creating the MySQL database and `.env`, and the production `artisan` migrate/cache commands.
 
 ## Change the content
 
@@ -55,7 +42,7 @@ The work grid shows every project in `case_studies`, and those marked `'featured
 
 `php artisan test` checks every project has its screenshots. The descriptions and facts come from each site's own pages, so check them with the client when a site changes.
 
-The font, Hanken Grotesk, is downloaded from Google Fonts when the assets are built and served from this site, with a size-matched fallback so the text doesn't jump when it loads (`vite.config.js`).
+The fonts are downloaded from Google Fonts when the assets are built and served from this site, each with a size-matched fallback so the text doesn't jump when it loads (`vite.config.js`): Hanken Grotesk for body text, and Fraunces — a high-contrast display serif — for the large headings (any element given the `font-display` class).
 
 ## Animation
 

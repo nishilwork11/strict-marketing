@@ -6,7 +6,7 @@
         as="h2"
         id="process-title"
         :text="$process['title']"
-        class="block text-[clamp(30px,3vw,48px)] leading-none font-light"
+        class="block font-display text-[clamp(30px,3vw,48px)] leading-none font-light"
     />
     {{-- Each step's marker pops in and its rule draws across the grey track in turn,
          then its text rises --}}
@@ -18,7 +18,7 @@
                 <span aria-hidden="true" class="line-dot absolute -top-[5px] left-0 size-[11px] rounded-full border-2 border-paper bg-ink"></span>
                 <div class="line-text">
                     <div class="flex items-baseline justify-between">
-                        <p class="text-[clamp(24px,2vw,30px)] font-light">{{ $step['title'] }}</p>
+                        <p class="font-display text-[clamp(24px,2vw,30px)] font-light">{{ $step['title'] }}</p>
                         <span class="text-[14px] text-grey tabular-nums">{{ $i + 1 }}</span>
                     </div>
                     <p class="mt-3 max-w-[300px] text-[16px] leading-relaxed text-slate">{{ $step['text'] }}</p>

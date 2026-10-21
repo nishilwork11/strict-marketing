@@ -32,7 +32,7 @@
                 as="h2"
                 id="print-title"
                 :text="$print['headline']"
-                class="misregister mt-6 block text-[clamp(32px,3.6vw,56px)] leading-[1.1] font-light text-balance"
+                class="misregister mt-6 block font-display text-[clamp(32px,3.6vw,56px)] leading-[1.1] font-light text-balance"
             />
             <p data-reveal="up" style="--i: 2" class="mx-auto mt-6 max-w-[620px] text-[17px] leading-relaxed text-paper/75">{{ $print['body'] }}</p>
             <div data-reveal="up" style="--i: 3">

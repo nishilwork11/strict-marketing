@@ -12,7 +12,7 @@
         as="p"
         mode="scrub"
         :text="$intro['statement']"
-        class="max-w-[880px] text-[clamp(30px,3.4vw,52px)] leading-[1.12] font-light tracking-[-0.01em] text-balance"
+        class="max-w-[880px] font-display text-[clamp(30px,3.4vw,52px)] leading-[1.12] font-light tracking-[-0.01em] text-balance"
     />
     <div class="mt-10" data-reveal="up">
         <x-text-link :href="$intro['cta']['href']">{{ $intro['cta']['label'] }}</x-text-link>
@@ -70,7 +70,7 @@
                             <div class="grain relative isolate flex h-full overflow-hidden rounded bg-ink text-paper">
                                 <div aria-hidden="true" class="absolute -top-1/2 -left-1/4 aspect-square w-[80%] rounded-full bg-[radial-gradient(circle,#1d5f8f_0%,transparent_62%)] opacity-80 transition-transform duration-1400 ease-(--ease-out-expo) group-hover:translate-x-[10%]"></div>
                                 <div aria-hidden="true" class="absolute -right-[12%] -bottom-[38%] aspect-square w-[70%] rounded-full border border-paper/20 transition-transform duration-1400 ease-(--ease-out-expo) group-hover:-translate-x-[14%] group-hover:-translate-y-[6%]"></div>
-                                <p class="relative mt-auto p-[6%] text-[clamp(30px,3vw,44px)] leading-[1.02] font-light tracking-[-0.02em]">Your project next?</p>
+                                <p class="relative mt-auto p-[6%] font-display text-[clamp(30px,3vw,44px)] leading-[1.02] font-light tracking-[-0.02em]">Your project next?</p>
                             </div>
                         </div>
                     </div>

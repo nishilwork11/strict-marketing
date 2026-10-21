@@ -1,0 +1,45 @@
+{
+  "_fonts-DgH7pSMY.css": {
+    "file": "assets/fonts-DgH7pSMY.css",
+    "src": "_fonts-DgH7pSMY.css"
+  },
+  "_fraunces-300-600-normal-ukD16Tqj.woff2": {
+    "file": "assets/fraunces-300-600-normal-ukD16Tqj.woff2",
+    "src": "_fraunces-300-600-normal-ukD16Tqj.woff2"
+  },
+  "_hanken-grotesk-100-900-normal-CaVRRdDk.woff2": {
+    "file": "assets/hanken-grotesk-100-900-normal-CaVRRdDk.woff2",
+    "src": "_hanken-grotesk-100-900-normal-CaVRRdDk.woff2"
+  },
+  "_roll-label-DbnBodRu.js": {
+    "file": "assets/roll-label-DbnBodRu.js",
+    "name": "roll-label"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-DRvpBj4C.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/admin.js": {
+    "file": "assets/admin-DRfrqzQ3.js",
+    "name": "admin",
+    "src": "resources/js/admin.js",
+    "isEntry": true,
+    "imports": [
+      "_roll-label-DbnBodRu.js"
+    ]
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-u6Y2ouyE.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "_roll-label-DbnBodRu.js"
+    ]
+  }
+}
