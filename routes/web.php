@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\EmailController;
 use App\Http\Controllers\Admin\EnquiryController;
 use App\Http\Controllers\Admin\SessionController;
 use App\Http\Controllers\ContactController;
@@ -22,5 +23,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('enquiries/{id}', [EnquiryController::class, 'show'])->name('enquiries.show');
         Route::patch('enquiries/{id}', [EnquiryController::class, 'update'])->name('enquiries.update');
         Route::delete('enquiries/{id}', [EnquiryController::class, 'destroy'])->name('enquiries.destroy');
+
+        // The mail settings in use, and a test email to check enquiries can be emailed
+        Route::get('email', [EmailController::class, 'show'])->name('email');
+        Route::post('email', [EmailController::class, 'send'])->name('email.send');
     });
 });

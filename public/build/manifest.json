@@ -16,7 +16,7 @@
     "name": "roll-label"
   },
   "resources/css/app.css": {
-    "file": "assets/app-CBpRUVMV.css",
+    "file": "assets/app-BiZPr47m.css",
     "name": "app",
     "names": [
       "app.css"
@@ -25,7 +25,7 @@
     "isEntry": true
   },
   "resources/js/admin.js": {
-    "file": "assets/admin-DRfrqzQ3.js",
+    "file": "assets/admin--rwTWqvZ.js",
     "name": "admin",
     "src": "resources/js/admin.js",
     "isEntry": true,

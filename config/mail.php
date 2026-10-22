@@ -45,7 +45,11 @@ return [
             'port' => env('MAIL_PORT', 2525),
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
-            'timeout' => null,
+            // Seconds to wait for the mail server before giving up, so a server that can't be
+            // reached shows an error instead of holding up the contact form
+            'timeout' => env('MAIL_TIMEOUT', 15),
+            // On port 587, refuse to sign in unless the server agrees to encrypt (STARTTLS)
+            'require_tls' => env('MAIL_REQUIRE_TLS', false),
             'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
         ],
 

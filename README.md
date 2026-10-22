@@ -6,7 +6,7 @@ Apart from the admin panel there are no other pages: every menu and button link 
 
 ## Run it
 
-You need PHP 8.3 or later, Composer, Node.js and MySQL (Laragon's MySQL works as it is).
+You need PHP 8.4 or later, Composer, Node.js and MySQL (Laragon's MySQL works as it is).
 
 ```bash
 composer install
@@ -27,7 +27,7 @@ CREATE DATABASE strict_media_marketing CHARACTER SET utf8mb4 COLLATE utf8mb4_uni
 
 ## Deploy (20i)
 
-The site runs on 20i shared hosting (StackCP) as an ordinary Laravel app: pure PHP on the server, with no Node or npm needed there. The CSS and JavaScript are compiled once with Vite and shipped in `public/build/`, so the server only needs PHP 8.3 and Composer.
+The site runs on 20i shared hosting (StackCP) as an ordinary Laravel app: pure PHP on the server, with no Node or npm needed there. The CSS and JavaScript are compiled once with Vite and shipped in `public/build/`, so the server only needs PHP 8.4 and Composer.
 
 See **[DEPLOY-20i.md](DEPLOY-20i.md)** for the full walkthrough — uploading the code, `composer install` over SSH, pointing the domain's document root at `public/`, creating the MySQL database and `.env`, and the production `artisan` migrate/cache commands.
 
@@ -62,7 +62,9 @@ The CSS is the Next.js site's `globals.css`, unchanged, in `resources/css/app.cs
 
 `app/Http/Controllers/ContactController.php` checks the enquiry with the same rules and messages as before. The form sends it with `fetch` and shows the answer in place (`resources/js/site/contact-form.js`); without JavaScript it posts normally and the page comes back with the same messages, or with "Enquiry sent".
 
-Valid enquiries are saved to the `enquiries` table for the admin panel and emailed to hello@strictmedia.co.uk (`notify` in `config/site.php`, or `ENQUIRY_EMAIL` in `.env`), with Reply-To set to the visitor and a link to the enquiry in the admin panel. Either one is enough: the visitor only sees "could not be sent" when the enquiry can be neither saved nor emailed. The email is `app/Mail/NewEnquiry.php` with `resources/views/mail/new-enquiry.blade.php`, and it goes out through the `MAIL_*` settings in `.env`. Locally `MAIL_MAILER=log` writes it to `storage/logs/laravel.log` instead; on 20i use the mailbox's SMTP login (see DEPLOY-20i.md).
+Valid enquiries are saved to the `enquiries` table for the admin panel and emailed to hello@strictmedia.co.uk (`notify` in `config/site.php`, or `ENQUIRY_EMAIL` in `.env`), with Reply-To set to the visitor and a link to the enquiry in the admin panel. Either one is enough: the visitor only sees "could not be sent" when the enquiry can be neither saved nor emailed. The email is `app/Mail/NewEnquiry.php` with `resources/views/mail/new-enquiry.blade.php`, and it goes out through the `MAIL_*` settings in `.env`. Locally `MAIL_MAILER=log` writes it to `storage/logs/laravel.log` instead; on the live site it goes through the hello@ mailbox's SMTP login at IONOS (see DEPLOY-20i.md).
+
+To check email is working, sign in to the admin panel and open **Email** (`/admin/email`). It shows the mail settings the site is using without the password, flags the usual mistakes (`MAIL_MAILER` still `log`, a config cache older than `.env`, a From address on another domain than the mailbox, a wrong `MAIL_SCHEME`), and sends a test email the same way as the enquiry emails. If that fails, it shows the mail server's own error and what to change (`app/Support/MailCheck.php`). Since an enquiry that is saved still counts as sent, the contact form can't tell you when only the email failed, so check here.
 
 Spam protection is a hidden honeypot field. Add rate limiting or a captcha if spam becomes a problem.
 
@@ -93,6 +95,7 @@ It keeps their ids, dates and statuses, and skips any already imported, so it's 
 | Pages and actions | `routes/web.php`, `app/Http/Controllers/Admin/`, `resources/views/admin/` |
 | Components | `resources/views/components/admin/`, `app/View/Components/Admin/` |
 | Date labels (UK time) | `app/Support/AdminDates.php` |
+| Email page: settings check and test email | `app/Support/MailCheck.php`, `app/Mail/TestEmail.php` |
 | Browser behaviour | `resources/js/admin/` |
 
 ## Sections
@@ -132,4 +135,4 @@ The page itself is `resources/views/home.blade.php`, and the shared pieces (arro
 php artisan test
 ```
 
-The tests cover the contact form's rules and messages, the honeypot, the admin sign-in and session, the inbox, status changes, deleting and the UK date labels. They run on an in-memory SQLite database, so they never touch MySQL.
+The tests cover the contact form's rules and messages, the honeypot, the admin sign-in and session, the inbox, status changes, deleting, the email page and the UK date labels. They run on an in-memory SQLite database, so they never touch MySQL.

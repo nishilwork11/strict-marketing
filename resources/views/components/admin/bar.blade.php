@@ -6,6 +6,11 @@
             <span class="hidden text-[14px] text-paper/70 sm:block">Admin</span>
         </div>
         <div class="flex items-center gap-6 text-[15px]">
+            <a
+                href="{{ route('admin.email') }}"
+                class="link-line hidden opacity-90 hover:opacity-100 sm:inline"
+                @if (request()->routeIs('admin.email')) aria-current="page" @endif
+            >Email</a>
             <a href="{{ route('home') }}" class="link-line hidden opacity-90 hover:opacity-100 sm:inline">View website</a>
             <form method="post" action="{{ route('admin.logout') }}">
                 @csrf

@@ -2,7 +2,7 @@
 
 This app runs on 20i as an ordinary Laravel site: **pure PHP on the server — no Node or
 npm there.** The CSS/JavaScript are compiled by Vite and committed in `public/build/`, so
-the server only needs **PHP 8.3 + Composer**. You only ever touch npm on your own machine,
+the server only needs **PHP 8.4 + Composer**. You only ever touch npm on your own machine,
 and only if you change the design (see [Updating later](#updating-later)).
 
 > Paths and binary names below (PHP binary, Composer path, your package home) vary per
@@ -21,9 +21,11 @@ and only if you change the design (see [Updating later](#updating-later)).
 
 ---
 
-## 1. Set the PHP version to 8.3
+## 1. Set the PHP version to 8.4
 
-My20i → **Manage Hosting** → your package → **PHP** → *Select PHP Version* → **8.3**.
+My20i → **Manage Hosting** → your package → **PHP** → *Select PHP Version* → **8.4** (or newer).
+The packages in `composer.lock` need PHP 8.4.1 or later: on 8.3, every page and every `artisan`
+command stops with "Composer detected issues in your platform".
 
 Make sure these extensions are enabled (they usually are by default): `openssl`, `pdo_mysql`,
 `mbstring`, `tokenizer`, `xml`, `ctype`, `json`, `bcmath`, `fileinfo`, `curl`.
@@ -62,9 +64,10 @@ Connect (see 20i's "connect via SSH" doc), then:
 ```bash
 cd ~/laravel
 
-# On 20i, a bare `composer`/`php` can be a stripped-down build. Call the PHP 8.3 binary and
-# Composer 2 explicitly. Your SSH login banner lists the exact binary name/path — adjust these:
-php8.3 $(which composer2) install --no-dev --optimize-autoloader
+# On 20i, a bare `composer`/`php` can be a stripped-down build. Call the PHP 8.4 binary (20i
+# names it php84, with no dot; php85 if you picked 8.5) and Composer 2 explicitly. Your SSH
+# login banner lists the exact binary names/paths — adjust these:
+php84 $(which composer2) install --no-dev --optimize-autoloader
 ```
 
 > **No SSH / Composer trouble?** You can instead run `composer install --no-dev
@@ -110,26 +113,40 @@ ADMIN_PASSWORD=change-me-to-a-long-random-string
 Generate the app key:
 
 ```bash
-php8.3 artisan key:generate
+php84 artisan key:generate
 ```
 
-Each enquiry is also emailed to hello@strictmedia.co.uk. Send it through that mailbox's own
-SMTP login, from StackCP → Email (20i's outgoing server is `smtp.stackmail.com`, port 465 with SSL):
+Each enquiry is also emailed to hello@strictmedia.co.uk. That mailbox is at **IONOS**, not 20i
+(the domain's main MX record is IONOS's `mx01.ionos.co.uk`), so the site sends through IONOS's
+outgoing server, signed in as the mailbox. Replace the `MAIL_` lines from `.env.example` with:
 
 ```dotenv
 MAIL_MAILER=smtp
 MAIL_SCHEME=smtps
-MAIL_HOST=smtp.stackmail.com
+MAIL_HOST=smtp.ionos.co.uk
 MAIL_PORT=465
 MAIL_USERNAME=hello@strictmedia.co.uk
-MAIL_PASSWORD=<the mailbox's password>
+MAIL_PASSWORD='the-mailbox-password'
 MAIL_FROM_ADDRESS=hello@strictmedia.co.uk
 MAIL_FROM_NAME="STRICTMEDIA website"
 ```
 
-The From address must be the mailbox you log in as, or 20i (and the receiving inbox) may reject it.
-To send enquiries to a different address, add `ENQUIRY_EMAIL=someone@strictmedia.co.uk`.
-After changing `.env`, re-run `php8.3 artisan config:cache`.
+- `MAIL_MAILER=smtp` matters: `.env.example` has `log`, which sends nothing (locally it writes emails to
+  `storage/logs/laravel.log`; with `LOG_LEVEL=error` they aren't even logged).
+- `MAIL_PASSWORD` is the hello@ mailbox's own password (the one that signs in to IONOS Webmail), not
+  your IONOS account login. If two-step verification is on for the mailbox, make an app password in
+  Webmail (your initials → My Account → Login & Security → App passwords) and use that instead.
+- Keep the password in single quotes, which keep every character as typed. Without quotes `.env` cuts
+  it off at a `#` and a space breaks the file; in double quotes a `\` breaks it. (Only if the password
+  itself has a `'` in it, use double quotes, writing `\"` for `"` and `\\` for `\`.)
+- `MAIL_FROM_ADDRESS` must be on the same domain as the mailbox you sign in with, or IONOS refuses it
+  ("550 Sender address is not allowed").
+- If port 465 won't connect, use `MAIL_PORT=587` with `MAIL_SCHEME=smtp` and `MAIL_REQUIRE_TLS=true`
+  (it then encrypts with STARTTLS, and won't send the password unencrypted).
+- To send enquiries to a different address, add `ENQUIRY_EMAIL=someone@strictmedia.co.uk`.
+
+After changing `.env`, run `php84 artisan config:cache` again (step 8), or the site keeps using the old
+settings. Then check it works: see [Check it](#10-check-it).
 
 ## 6. Point the domain's document root at `public/`
 
@@ -154,10 +171,10 @@ Laravel won't run without write access to `storage/` and `bootstrap/cache/`.
 ## 8. Migrate and cache (over SSH)
 
 ```bash
-php8.3 artisan migrate --force      # creates sessions, cache, jobs and enquiries tables
-php8.3 artisan config:cache
-php8.3 artisan route:cache
-php8.3 artisan view:cache
+php84 artisan migrate --force      # creates sessions, cache, jobs and enquiries tables
+php84 artisan config:cache
+php84 artisan route:cache
+php84 artisan view:cache
 ```
 
 ## 9. Turn on HTTPS
@@ -171,6 +188,10 @@ Laravel builds `https://` URLs and secure cookies correctly behind 20i's proxy.)
 - `https://yourdomain.co.uk` → the landing page, with Fraunces headings and Hanken body text.
 - `https://yourdomain.co.uk/admin/login` → sign in with `ADMIN_PASSWORD`.
 - Submit the contact form → it should save and show "Enquiry sent." (confirms the database works).
+- `https://yourdomain.co.uk/admin/email` → press **Send test email**. It shows the mail settings the site
+  is using, flags the usual mistakes (including a config cache older than `.env`), and if sending fails,
+  shows the mail server's own error and what to change. The contact form still says "Enquiry sent." when
+  only the email fails, since the enquiry is saved for the admin panel, so this page is the way to check.
 
 ---
 
@@ -178,11 +199,11 @@ Laravel builds `https://` URLs and secure cookies correctly behind 20i's proxy.)
 
 ```bash
 # 1. If you changed PHP/content/views only — pull or re-upload, then on the server:
-php8.3 artisan migrate --force
-php8.3 artisan config:cache && php8.3 artisan route:cache && php8.3 artisan view:cache
+php84 artisan migrate --force
+php84 artisan config:cache && php84 artisan route:cache && php84 artisan view:cache
 
 # 2. If composer.json changed:
-php8.3 $(which composer2) install --no-dev --optimize-autoloader
+php84 $(which composer2) install --no-dev --optimize-autoloader
 
 # 3. If you changed CSS/JS/fonts — rebuild on YOUR machine (the only time npm is used),
 #    then commit/upload the regenerated public/build:
@@ -203,10 +224,19 @@ Editing only the text in `config/site.php` needs **no rebuild** — just re-run 
   `public/build/` wasn't uploaded.
 - **Stale site after an update:** re-run the `config:cache`/`route:cache`/`view:cache` commands;
   they're cached in step 8.
+- **Enquiry emails not arriving:** open `/admin/email` and send a test (see step 10). Failed enquiry
+  emails are also logged in `storage/logs/laravel.log` as `[contact] Could not email the enquiry`.
+  If the test says it was sent but nothing arrives, look in the mailbox's spam folder in IONOS Webmail,
+  and check `MAIL_HOST` is IONOS's server: mail sent through 20i's `smtp.stackmail.com` can stay inside
+  20i, and doesn't pass the domain's SPF check, which only allows IONOS. Also, in the domain's DNS at 20i
+  (My20i → Manage DNS), the MX records should all be IONOS's (`mx00`/`mx01.ionos.co.uk`): an extra
+  `mx.stackmail.com` MX sends incoming mail to 20i instead of IONOS whenever IONOS's main server
+  can't be reached.
 
 ## 20i references
 
 - Change the document root — https://docs.20i.com/web-hosting/change-document-root
 - Connect via SSH — https://docs.20i.com/ssh/connect-via-ssh
 - Run Composer via SSH — https://docs.20i.com/ssh/run-composer-ssh
+- PHP versions over SSH (`php84`, …) — https://docs.20i.com/web-hosting/php-modules-available-on-shared-hosting
 - Laravel hosting questions — https://docs.20i.com/laravel-cloud-hosting
