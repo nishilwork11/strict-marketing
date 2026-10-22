@@ -62,7 +62,7 @@ The CSS is the Next.js site's `globals.css`, unchanged, in `resources/css/app.cs
 
 `app/Http/Controllers/ContactController.php` checks the enquiry with the same rules and messages as before. The form sends it with `fetch` and shows the answer in place (`resources/js/site/contact-form.js`); without JavaScript it posts normally and the page comes back with the same messages, or with "Enquiry sent".
 
-Valid enquiries are saved to the `enquiries` table for the admin panel and written to `storage/logs/laravel.log`. To also receive them by email, set the `MAIL_*` values in `.env` and send one from `deliver()` in the controller; an example is in its comment.
+Valid enquiries are saved to the `enquiries` table for the admin panel and emailed to hello@strictmedia.co.uk (`notify` in `config/site.php`, or `ENQUIRY_EMAIL` in `.env`), with Reply-To set to the visitor and a link to the enquiry in the admin panel. Either one is enough: the visitor only sees "could not be sent" when the enquiry can be neither saved nor emailed. The email is `app/Mail/NewEnquiry.php` with `resources/views/mail/new-enquiry.blade.php`, and it goes out through the `MAIL_*` settings in `.env`. Locally `MAIL_MAILER=log` writes it to `storage/logs/laravel.log` instead; on 20i use the mailbox's SMTP login (see DEPLOY-20i.md).
 
 Spam protection is a hidden honeypot field. Add rate limiting or a captcha if spam becomes a problem.
 

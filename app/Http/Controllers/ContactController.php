@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewEnquiry;
 use App\Models\Enquiry;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Throwable;
 
@@ -74,22 +76,34 @@ class ContactController extends Controller
     }
 
     /**
-     * Where a valid enquiry goes: saved for the admin panel at /admin, and logged.
+     * Where a valid enquiry goes: saved for the admin panel at /admin, emailed to
+     * config('site.contact.notify') through the MAIL_* settings in .env, and logged.
      *
-     * To also have it emailed, set the MAIL_* values in .env and add, for example:
-     *
-     *   Mail::raw(json_encode($enquiry, JSON_PRETTY_PRINT), fn ($mail) => $mail
-     *       ->to(config('site.brand.email'))
-     *       ->replyTo($enquiry['email'])
-     *       ->subject("New enquiry from {$enquiry['name']}"));
-     *
-     * Throwing here makes the form show its "could not be sent" message.
+     * Either one is enough: the enquiry only counts as lost, and the form shows its
+     * "could not be sent" message, when it can be neither saved nor emailed.
      *
      * @param  array<string, mixed>  $enquiry
      */
     protected function deliver(array $enquiry): void
     {
-        Enquiry::create($enquiry);
+        $saved = null;
+
+        try {
+            $saved = Enquiry::create($enquiry);
+        } catch (Throwable $e) {
+            Log::error('[contact] Could not save the enquiry', ['exception' => $e]);
+        }
+
+        try {
+            Mail::to(config('site.contact.notify'))
+                ->send(new NewEnquiry($enquiry, $saved ? route('admin.enquiries.show', $saved) : null));
+        } catch (Throwable $e) {
+            Log::error('[contact] Could not email the enquiry', ['exception' => $e]);
+
+            if (! $saved) {
+                throw $e;
+            }
+        }
 
         Log::info('[contact] New enquiry', $enquiry);
     }
