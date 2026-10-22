@@ -264,6 +264,8 @@ return [
         'form_title' => "Let's discuss your project",
         'services' => ['Brand & design', 'Website', 'SEO', 'PPC', 'Custom software', 'CRM', 'Printing'],
         'budgets' => ['Under £5k', '£5k–15k', '£15k–50k', '£50k+', 'Not sure yet'],
+        // Each enquiry is emailed here, as well as saved for the admin panel
+        'notify' => env('ENQUIRY_EMAIL', 'hello@strictmedia.co.uk'),
     ],
 
 ];

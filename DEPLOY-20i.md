@@ -113,8 +113,23 @@ Generate the app key:
 php8.3 artisan key:generate
 ```
 
-(To receive enquiries by email as well as in the admin panel, also set the `MAIL_*` values and
-wire up `deliver()` in `app/Http/Controllers/ContactController.php` — see the main README.)
+Each enquiry is also emailed to hello@strictmedia.co.uk. Send it through that mailbox's own
+SMTP login, from StackCP → Email (20i's outgoing server is `smtp.stackmail.com`, port 465 with SSL):
+
+```dotenv
+MAIL_MAILER=smtp
+MAIL_SCHEME=smtps
+MAIL_HOST=smtp.stackmail.com
+MAIL_PORT=465
+MAIL_USERNAME=hello@strictmedia.co.uk
+MAIL_PASSWORD=<the mailbox's password>
+MAIL_FROM_ADDRESS=hello@strictmedia.co.uk
+MAIL_FROM_NAME="STRICTMEDIA website"
+```
+
+The From address must be the mailbox you log in as, or 20i (and the receiving inbox) may reject it.
+To send enquiries to a different address, add `ENQUIRY_EMAIL=someone@strictmedia.co.uk`.
+After changing `.env`, re-run `php8.3 artisan config:cache`.
 
 ## 6. Point the domain's document root at `public/`
 
