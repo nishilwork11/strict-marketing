@@ -45,7 +45,7 @@ return [
         'wordmark' => 'STRICTMEDIA',
         'email' => 'hello@strictmedia.co.uk',
         'phone' => '+44 7740 536355',
-        'address' => ['Studio address line', 'City, Postcode'],
+        'address' => ['London, UK'],
         'locations' => ['London', 'Remote, UK-wide'],
         'year' => 2026,
         'tagline' => 'Brand and design, web development, marketing, custom software and printing, from one team.',
